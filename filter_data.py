@@ -49,4 +49,18 @@ for file_no in range(range_low, range_high):
 			json_errors += 1
 			continue
 
-# ###########
+############
+
+##filter into 4 categories
+## 1: check mark not zp related
+## 2: check mark and zp related
+## 3: no check mark not zp related
+## 4: no check mark zp related
+
+
+def is_verified(tweet):
+
+
+def is_zpiet_related(tweet):
+	text = tweet['text']	
+
