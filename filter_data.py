@@ -56,11 +56,70 @@ for file_no in range(range_low, range_high):
 ## 2: check mark and zp related
 ## 3: no check mark not zp related
 ## 4: no check mark zp related
+print("How many tweets: " + str(len(all_tweets)))
+
+
+zpiet_text_list = ['zwarte piet', 'black piet', '#zwartepiet', '#zwartepieten', '#blackpiet']
+zpiet_hashtag_list = ['#zwartepiet', '#zwartepieten', '#blackpiet']
+zwarte_text = ['zwarte', 'black']
+piet_text = ['piet', 'pieten']
+verified_no_piet = []
+verified_piet = []
+activist_no_piet = []
+activist_piet = []
 
 
 def is_verified(tweet):
-
+	verified = tweet['user']['verified']
+	if verified == True:
+		return True
+	else:
+		return False
 
 def is_zpiet_related(tweet):
-	text = tweet['text']	
+	text = tweet['text']
+	if ('zwarte' and 'piet') in text:
+		return True
+	elif ('black' and 'piet') in text:
+		return True
+	for word in text:
+		if word in zpiet_text_list:
+			return True
+
+
+for tweet in all_tweets:
+	if is_verified(tweet):
+		if is_zpiet_related(tweet):
+			verified_piet.append(tweet)
+		else:
+			verified_no_piet.append(tweet)
+	elif is_zpiet_related(tweet):
+		activist_piet.append(tweet)
+	else:
+		activist_no_piet.append(tweet)
+
+print("total verified no piet: " + str(len(verified_no_piet)))
+print("total verified piet: " + str(len(verified_piet)))
+print("total activist no piet: " + str(len(activist_no_piet)))
+print("total activist piet: " + str(len(activist_piet)))
+
+
+with open(outfile + 'verified_no_piet' + str(run_number) + '.json', 'w') as f:
+	json.dump(verified_no_piet, f)
+
+with open(outfile + 'verified_piet' + str(run_number) + '.json', 'w') as f:
+	json.dump(verified_piet, f)
+
+with open(outfile + 'activist_no_piet' + str(run_number) + '.json', 'w') as f:
+	json.dump(activist_no_piet, f)
+
+with open(outfile + 'activist_piet' + str(run_number) + '.json', 'w') as f:
+	json.dump(activist_piet, f)
+
+
+print('done')
+
+
+
+
 
